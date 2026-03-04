@@ -171,6 +171,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D9',
     paddingHorizontal: 10,
     paddingBottom: 12,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
   headerContent: {
     flexDirection: 'row',
@@ -178,9 +180,9 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   backBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+    width: 49,
+    height: 49,
+    borderRadius: 15,
     backgroundColor: '#CFD0D1',
     alignItems: 'center',
     justifyContent: 'center',
@@ -196,9 +198,9 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   headerAvatar: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 49,
+    height: 49,
+    borderRadius: 15,
   },
   messagesScroll: {
     flex: 1,

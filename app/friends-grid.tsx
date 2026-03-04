@@ -52,7 +52,7 @@ export default function FriendsGridScreen() {
           <BackArrowIcon width={20} height={20} color="#282828" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Friends</Text>
-        <View style={{ width: 40 }} />
+        <View style={{ width: 49 }} />
       </View>
 
       {/* Search Bar */}
@@ -95,7 +95,7 @@ export default function FriendsGridScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#A0A0A0',
   },
   header: {
     flexDirection: 'row',
@@ -103,12 +103,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#D9D9D9',
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
   backBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+    width: 49,
+    height: 49,
+    borderRadius: 15,
     backgroundColor: '#CFD0D1',
     alignItems: 'center',
     justifyContent: 'center',

@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cardBackground,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingTop: 35,
+    paddingTop: 40,
     paddingBottom: 50,
     marginTop: 15,
     flexGrow: 1,
@@ -140,12 +140,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: Colors.textDark,
     textAlign: 'center',
-    marginBottom: 28,
+    marginBottom: 36,
   },
   // Avatar
   avatarContainer: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 40,
   },
   avatar: {
     width: 90,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.inputBackground,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
     position: 'relative',
   },
   plusOverlay: {
@@ -189,8 +189,8 @@ const styles = StyleSheet.create({
   },
   // Inputs
   inputGroup: {
-    gap: 11,
-    marginBottom: 18,
+    gap: 10,
+    marginBottom: 17,
   },
   // Strava
   stravaLine: {

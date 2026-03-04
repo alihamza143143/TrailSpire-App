@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
 
   //  Upper 
   upperSection: {
-    height: 300,
+    height: 323,
     position: 'relative',
     overflow: 'hidden',
   },
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    top: 143,
+    top: 142,
     alignItems: 'center',
   },
 
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cardBackground,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingTop: 44,
+    paddingTop: 50,
     paddingBottom: 50,
     flexGrow: 1,
   },

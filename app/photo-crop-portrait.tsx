@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
   },
   topBar: {
     flexDirection: 'row',
@@ -150,12 +150,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   photoContainer: {
-    marginTop: 20,
+    marginTop: 6,
     borderRadius: 30,
     overflow: 'hidden',
     backgroundColor: '#A0A0A0',
     alignSelf: 'center',
-    width: SCREEN_W - 20,
+    width: SCREEN_W - 10,
     height: 592,
   },
   photoPreview: {
@@ -243,8 +243,8 @@ const styles = StyleSheet.create({
   aspectText: {
     fontFamily: 'Inter',
     fontWeight: '500',
-    fontSize: 12,
-    color: '#F2F2F2',
+    fontSize: 14,
+    color: '#A0A0A0',
   },
   aspectTextActive: {
     color: '#007AFF',

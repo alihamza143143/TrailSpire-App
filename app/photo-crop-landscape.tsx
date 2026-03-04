@@ -34,7 +34,7 @@ export default function PhotoCropLandscapeScreen() {
           <BackArrowIcon width={20} height={20} color="#282828" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Crop Photo</Text>
-        <View style={{ width: 40 }} />
+        <View style={{ width: 49 }} />
       </View>
 
       {/* Photo Preview */}
@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   backBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+    width: 49,
+    height: 49,
+    borderRadius: 15,
     backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   photo: {
     width: 383,
     height: 250,
-    borderRadius: 12,
+    borderRadius: 20,
   },
   cropOverlay: {
     position: 'absolute',
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     height: 250,
     borderWidth: 2,
     borderColor: '#FFFFFF',
-    borderRadius: 12,
+    borderRadius: 20,
   },
   cropGrid: {
     flex: 1,

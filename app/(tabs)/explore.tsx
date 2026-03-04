@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Colors } from '../../src/constants/theme';
-import { MapPinIcon } from '../../src/components/icons/MapPinIcon';
+import { CompassIcon } from '../../src/components/icons/CompassIcon';
 import { HeartIcon } from '../../src/components/icons/HeartIcon';
-import { ArrowUpRightIcon } from '../../src/components/icons/ArrowUpRightIcon';
+import { FilterIcon } from '../../src/components/icons/FilterIcon';
 import { SearchIcon } from '../../src/components/icons/SearchIcon';
+import { ArrowUpRightIcon } from '../../src/components/icons/ArrowUpRightIcon';
 
 const { width: SCREEN_W } = Dimensions.get('window');
-const CARD_W = (SCREEN_W - 24 - 8) / 2; // two-column with gap
 
 const EXPLORE_IMAGES = {
   snow: require('../../assets/images/feed/feed_snow_mountain.png'),
@@ -32,73 +32,150 @@ const EXPLORE_IMAGES = {
   trailSunset: require('../../assets/images/feed/feed_trail_sunset.png'),
 };
 
+const PROFILE_IMAGES = {
+  p1: require('../../assets/images/feed/profile_photo1.png'),
+  p2: require('../../assets/images/feed/profile_photo2.png'),
+  p3: require('../../assets/images/feed/profile_photo3.png'),
+};
+
 interface ExploreItem {
   id: string;
   image: any;
-  title: string;
-  location: string;
+  username: string;
+  profileImage: any;
   height: number;
+  activityType?: string;
+  elevation?: string;
+  distance?: string;
+  time?: string;
+  progress?: number;
 }
 
 const EXPLORE_DATA: ExploreItem[] = [
-  { id: '1', image: EXPLORE_IMAGES.snow, title: 'Hiking', location: 'French Alps', height: 220 },
-  { id: '2', image: EXPLORE_IMAGES.landscape, title: 'Gravel', location: 'Iceland', height: 180 },
-  { id: '3', image: EXPLORE_IMAGES.tent, title: 'Camping', location: 'Norway', height: 260 },
-  { id: '4', image: EXPLORE_IMAGES.skiing, title: 'Skiing', location: 'Chamonix', height: 200 },
-  { id: '5', image: EXPLORE_IMAGES.hikerSnow, title: 'Expedition', location: 'Antarctica', height: 240 },
-  { id: '6', image: EXPLORE_IMAGES.jeep, title: 'Off-road', location: 'Morocco', height: 190 },
-  { id: '7', image: EXPLORE_IMAGES.trailSunset, title: 'Trail Running', location: 'Canary Islands', height: 220 },
-  { id: '8', image: EXPLORE_IMAGES.powder, title: 'Backcountry', location: 'Japan', height: 250 },
+  { id: '1', image: EXPLORE_IMAGES.snow, username: '@isabel21', profileImage: PROFILE_IMAGES.p1, height: 220 },
+  { id: '2', image: EXPLORE_IMAGES.landscape, username: '@cusmin', profileImage: PROFILE_IMAGES.p2, height: 180 },
+  { id: '3', image: EXPLORE_IMAGES.tent, username: '@rebsix', profileImage: PROFILE_IMAGES.p3, height: 260 },
+  { id: '4', image: EXPLORE_IMAGES.skiing, username: '@_ashley', profileImage: PROFILE_IMAGES.p1, height: 200 },
+  { id: '5', image: EXPLORE_IMAGES.hikerSnow, username: '@carl.noto', profileImage: PROFILE_IMAGES.p2, height: 240 },
+  { id: '6', image: EXPLORE_IMAGES.jeep, username: '@tony', profileImage: PROFILE_IMAGES.p3, height: 190 },
+  { id: '7', image: EXPLORE_IMAGES.trailSunset, username: '@nik_66', profileImage: PROFILE_IMAGES.p1, height: 220 },
+  { id: '8', image: EXPLORE_IMAGES.powder, username: '@will87', profileImage: PROFILE_IMAGES.p2, height: 250, activityType: 'Road Cycling', elevation: '2550mt', distance: '33km', time: '5d 3h', progress: 0.65 },
+  { id: '9', image: EXPLORE_IMAGES.adventure, username: '@gioforty', profileImage: PROFILE_IMAGES.p3, height: 200 },
+  { id: '10', image: EXPLORE_IMAGES.iceland, username: '@lollomag', profileImage: PROFILE_IMAGES.p1, height: 240 },
 ];
-
-const CATEGORIES = ['All', 'Hiking', 'Cycling', 'Skiing', 'Running', 'Climbing'];
 
 export default function ExploreScreen() {
   const router = useRouter();
-  const [selectedCat, setSelectedCat] = useState('All');
+  const [activeTab, setActiveTab] = useState<'explore' | 'follow'>('explore');
 
   const leftColumn = EXPLORE_DATA.filter((_, i) => i % 2 === 0);
   const rightColumn = EXPLORE_DATA.filter((_, i) => i % 2 === 1);
 
+  const renderCard = (item: ExploreItem) => (
+    <View key={item.id} style={styles.cardWrapper}>
+      {/* User profile row above card */}
+      <View style={styles.userRow}>
+        <Image source={item.profileImage} style={styles.userAvatar} />
+        <Text style={styles.userName}>{item.username}</Text>
+      </View>
+      <TouchableOpacity
+        style={styles.gridCard}
+        activeOpacity={0.85}
+        onPress={() => router.push('/activity-detail')}
+      >
+        <Image
+          source={item.image}
+          style={[styles.gridImage, { height: item.height }]}
+          resizeMode="cover"
+        />
+        {/* Heart button overlay */}
+        <View style={styles.heartOverlay}>
+          <HeartIcon width={16} height={16} color="#FFFFFF" />
+        </View>
+      </TouchableOpacity>
+      {/* Activity stats below card (if present) */}
+      {item.activityType && (
+        <View style={styles.statsBlock}>
+          <Text style={styles.statsTitle}>{item.activityType}</Text>
+          <View style={styles.statsRow}>
+            <Text style={styles.statsLabel}>Elevation</Text>
+            <View style={styles.statsBarContainer}>
+              <Image source={EXPLORE_IMAGES.trailSunset} style={styles.statsBarBg} resizeMode="cover" />
+            </View>
+            <Text style={styles.statsValue}>{item.elevation}</Text>
+          </View>
+          <View style={styles.statsRow}>
+            <Text style={styles.statsLabel}>Distance</Text>
+            <View style={styles.statsProgressContainer}>
+              <View style={[styles.statsProgressBar, { width: `${(item.progress || 0) * 100}%` }]} />
+            </View>
+            <Text style={styles.statsValue}>{item.distance}</Text>
+          </View>
+          <View style={styles.statsRow}>
+            <Text style={styles.statsLabel}>Time</Text>
+            <View style={{ flex: 1 }} />
+            <Text style={styles.statsValue}>{item.time}</Text>
+          </View>
+        </View>
+      )}
+    </View>
+  );
+
   return (
     <View style={styles.screen}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerTop}>
-          <View>
-            <Text style={styles.locationLabel}>Current Location</Text>
-            <View style={styles.locationRow}>
-              <MapPinIcon width={14} height={14} color="#007AFF" />
-              <Text style={styles.locationName}>Oslo, Norway</Text>
-            </View>
-          </View>
-          <TouchableOpacity style={styles.searchBtn} activeOpacity={0.7} onPress={() => router.push('/search')}>
-            <SearchIcon width={18} height={18} color="#1F1F1F" />
-          </TouchableOpacity>
+      {/* Banner */}
+      <View style={styles.banner}>
+        <Image
+          source={EXPLORE_IMAGES.snow}
+          style={styles.bannerImage}
+          resizeMode="cover"
+        />
+        {/* Compass icon top-left */}
+        <View style={styles.bannerCompass}>
+          <CompassIcon width={31} height={31} color="#FFFFFF" />
         </View>
-        <Text style={styles.exploreTitle}>Explore</Text>
+        {/* Header info text */}
+        <View style={styles.bannerTextBlock}>
+          <Text style={styles.bannerTitle}>Explore Mode</Text>
+          <Text style={styles.bannerSubtitle}>World Atlas</Text>
+          <Text style={styles.bannerCount}>329,246 activities found</Text>
+        </View>
+        {/* Search button top-right */}
+        <TouchableOpacity style={styles.bannerSearchBtn} activeOpacity={0.7} onPress={() => router.push('/search')}>
+          <SearchIcon width={18} height={18} color="#FFFFFF" />
+        </TouchableOpacity>
       </View>
 
-      {/* Category pills */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.catRow}
-        style={styles.catScroll}
-      >
-        {CATEGORIES.map((cat) => (
-          <TouchableOpacity
-            key={cat}
-            style={[styles.catPill, selectedCat === cat && styles.catPillActive]}
-            onPress={() => setSelectedCat(cat)}
-            activeOpacity={0.7}
-          >
-            <Text style={[styles.catText, selectedCat === cat && styles.catTextActive]}>
-              {cat}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {/* Search bar row */}
+      <View style={styles.searchBarRow}>
+        <TouchableOpacity style={styles.searchSideBtn} activeOpacity={0.7}>
+          <FilterIcon width={21} height={21} color="#282828" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.searchBar}
+          activeOpacity={0.7}
+          onPress={() => router.push('/search')}
+        >
+          <Text style={styles.searchBarText}>Search Location</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.searchSideBtn} activeOpacity={0.7}>
+          <ArrowUpRightIcon width={16} height={16} color="#282828" />
+        </TouchableOpacity>
+      </View>
+
+      {/* Tab selector: Explore / You Follow */}
+      <View style={styles.tabRow}>
+        <TouchableOpacity onPress={() => setActiveTab('explore')} activeOpacity={0.7}>
+          <Text style={[styles.tabText, activeTab === 'explore' && styles.tabTextActive]}>
+            Explore
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setActiveTab('follow')} activeOpacity={0.7}>
+          <Text style={[styles.tabText, activeTab === 'follow' && styles.tabTextActive]}>
+            You Follow
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Masonry Grid */}
       <ScrollView
@@ -109,58 +186,14 @@ export default function ExploreScreen() {
         <View style={styles.masonryContainer}>
           {/* Left column */}
           <View style={styles.masonryColumn}>
-            {leftColumn.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                style={styles.gridCard}
-                activeOpacity={0.85}
-                onPress={() => router.push('/activity-detail')}
-              >
-                <Image
-                  source={item.image}
-                  style={[styles.gridImage, { height: item.height }]}
-                  resizeMode="cover"
-                />
-                <View style={styles.cardInfo}>
-                  <Text style={styles.cardTitle}>{item.title}</Text>
-                  <Text style={styles.cardLocation}>{item.location}</Text>
-                </View>
-                <View style={styles.cardActions}>
-                  <TouchableOpacity style={styles.actionBtn} activeOpacity={0.7} onPress={() => router.push('/activity-detail')}>
-                    <ArrowUpRightIcon width={14} height={14} color="#007AFF" />
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            ))}
+            {leftColumn.map(renderCard)}
           </View>
           {/* Right column */}
           <View style={styles.masonryColumn}>
-            {rightColumn.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                style={styles.gridCard}
-                activeOpacity={0.85}
-                onPress={() => router.push('/activity-detail')}
-              >
-                <Image
-                  source={item.image}
-                  style={[styles.gridImage, { height: item.height }]}
-                  resizeMode="cover"
-                />
-                <View style={styles.cardInfo}>
-                  <Text style={styles.cardTitle}>{item.title}</Text>
-                  <Text style={styles.cardLocation}>{item.location}</Text>
-                </View>
-                <View style={styles.cardActions}>
-                  <TouchableOpacity style={styles.actionBtn} activeOpacity={0.7} onPress={() => router.push('/activity-detail')}>
-                    <ArrowUpRightIcon width={14} height={14} color="#007AFF" />
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            ))}
+            {rightColumn.map(renderCard)}
           </View>
         </View>
-        <View style={{ height: 100 }} />
+        <View style={{ height: 90 }} />
       </ScrollView>
     </View>
   );
@@ -171,94 +204,145 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
-  // Header
-  header: {
-    paddingTop: 60,
-    paddingHorizontal: 18,
-    paddingBottom: 8,
-    backgroundColor: 'rgba(217,217,217,0.9)',
+
+  /* ── Banner (Figma: top 50/30 radii, 382w, 110h, opacity 0.8) ── */
+  banner: {
+    marginTop: 5,
+    marginHorizontal: (SCREEN_W - 382) / 2,
+    height: 110,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
+    overflow: 'hidden',
+    position: 'relative',
   },
-  headerTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 12,
+  bannerImage: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
+    opacity: 0.8,
   },
-  locationLabel: {
-    fontSize: 12,
-    color: '#838385',
-    marginBottom: 2,
+  bannerCompass: {
+    position: 'absolute',
+    top: 44,
+    left: 14,
   },
-  locationRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
+  bannerTextBlock: {
+    position: 'absolute',
+    top: 44,
+    left: 53,
   },
-  locationName: {
-    fontSize: 14,
-    fontWeight: '600',
+  bannerTitle: {
+    fontSize: 16,
+    fontWeight: '500',
     color: '#282828',
   },
-  searchBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+  bannerSubtitle: {
+    fontSize: 12,
+    color: '#007AFF',
+    marginTop: 1,
+  },
+  bannerCount: {
+    fontSize: 12,
+    color: '#007AFF',
+    marginTop: 1,
+  },
+  bannerSearchBtn: {
+    position: 'absolute',
+    top: 40,
+    right: 10,
+    width: 43,
+    height: 43,
+    borderRadius: 15,
     backgroundColor: 'rgba(207,208,209,0.8)',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  exploreTitle: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#282828',
+
+  /* ── Search bar row (Figma: 251w bar, 49h, two 48.9 side buttons) ── */
+  searchBarRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 18,
+    marginTop: 8,
+    gap: 8,
+  },
+  searchSideBtn: {
+    width: 49,
+    height: 49,
+    borderRadius: 15,
+    backgroundColor: '#CFD0D1',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchBar: {
+    flex: 1,
+    height: 49,
+    borderRadius: 15,
+    backgroundColor: '#CFD0D1',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchBarText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#1F1F1F',
+  },
+
+  /* ── Tab selector (Figma: 20px Bold, explore active #282828, follow inactive rgba(60,60,67,0.29)) ── */
+  tabRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 22,
+    marginTop: 14,
     marginBottom: 6,
   },
-
-  // Categories
-  catScroll: {
-    maxHeight: 44,
-    marginTop: 12,
+  tabText: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: 'rgba(60,60,67,0.29)',
   },
-  catRow: {
-    paddingHorizontal: 18,
-    gap: 8,
+  tabTextActive: {
+    color: '#282828',
+  },
+
+  /* ── Per-card user profile row ── */
+  cardWrapper: {
+    marginBottom: 4,
+  },
+  userRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 4,
+    paddingLeft: 2,
+    gap: 6,
   },
-  catPill: {
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: '#E8E8E6',
+  userAvatar: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
   },
-  catPillActive: {
-    backgroundColor: '#282828',
-  },
-  catText: {
+  userName: {
     fontSize: 13,
-    fontWeight: '500',
-    color: '#838385',
-  },
-  catTextActive: {
-    color: '#FFFFFF',
+    fontWeight: '700',
+    color: '#282828',
   },
 
-  // Grid
+  /* ── Grid ── */
   gridScroll: {
     flex: 1,
-    marginTop: 12,
   },
   gridContent: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 12,
   },
   masonryContainer: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 10,
   },
   masonryColumn: {
     flex: 1,
-    gap: 8,
   },
   gridCard: {
     borderRadius: 20,
@@ -270,35 +354,71 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 20,
   },
-  cardInfo: {
-    position: 'absolute',
-    bottom: 40,
-    left: 10,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    borderRadius: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  cardTitle: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#FFFFFF',
-  },
-  cardLocation: {
-    fontSize: 10,
-    color: 'rgba(255,255,255,0.8)',
-  },
-  cardActions: {
+
+  /* ── Heart overlay (Figma: backdrop blur, rgba(0,0,0,0.2), rounded 10) ── */
+  heartOverlay: {
     position: 'absolute',
     bottom: 8,
     right: 8,
-  },
-  actionBtn: {
-    width: 28,
-    height: 28,
-    borderRadius: 8,
-    backgroundColor: 'rgba(255,255,255,0.85)',
+    width: 37,
+    height: 37,
+    borderRadius: 10,
+    backgroundColor: 'rgba(0,0,0,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  /* ── Activity stats block (below card, Figma: 10px Bold title, 8px labels/values) ── */
+  statsBlock: {
+    paddingHorizontal: 4,
+    paddingVertical: 6,
+  },
+  statsTitle: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#282828',
+    marginBottom: 4,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 3,
+  },
+  statsLabel: {
+    fontSize: 8,
+    fontWeight: '600',
+    color: '#282828',
+    width: 42,
+  },
+  statsBarContainer: {
+    flex: 1,
+    height: 10,
+    borderRadius: 20,
+    overflow: 'hidden',
+    marginHorizontal: 4,
+  },
+  statsBarBg: {
+    width: '100%',
+    height: '100%',
+  },
+  statsProgressContainer: {
+    flex: 1,
+    height: 6,
+    borderRadius: 20,
+    backgroundColor: '#E8E8E6',
+    marginHorizontal: 4,
+    overflow: 'hidden',
+  },
+  statsProgressBar: {
+    height: '100%',
+    borderRadius: 20,
+    backgroundColor: '#282828',
+  },
+  statsValue: {
+    fontSize: 8,
+    fontWeight: '600',
+    color: '#282828',
+    textAlign: 'right',
+    minWidth: 30,
   },
 });

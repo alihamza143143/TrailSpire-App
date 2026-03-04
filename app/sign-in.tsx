@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
 
   //  Upper 
   upperSection: {
-    height: 300,
+    height: 323,
     position: 'relative',
     overflow: 'hidden',
   },
@@ -163,9 +163,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    // Center logo at the circle center — circle center is at y=193 in 393-frame
-    // Logo is 100px tall, so top = 193 - 50 = 143
-    top: 143,
+    // Center logo at the circle center — Figma top: 142
+    top: 142,
     alignItems: 'center',
   },
 
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cardBackground,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingTop: 44,
+    paddingTop: 50,
     paddingBottom: 50,
     flexGrow: 1,
   },

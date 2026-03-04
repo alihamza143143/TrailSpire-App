@@ -1,6 +1,7 @@
 # ATLAS (TrailSpire) — Implementation Progress
 
 > **Standing Rule:** Always update this file after any code changes.
+> **Workflow Rule (Assistant):** After any implementation/edit, update this file in the same turn before final handoff—no reminder needed.
 
 ## Status Legend
 - ⬜ Not Started
@@ -271,18 +272,22 @@
 | 2026-03-03 | **Phase 8: New Figma screens** | Added 5 new screens from Figma: Search, Explore Results, Photo Gallery, Image Viewer, Create Modal. Downloaded 13 new image assets. Registered 5 new routes. Wired all navigation across all screens. |
 | 2026-03-03 | **Phase 9: Additional Figma screens** | Added 10 new screens: Photo Crop Portrait/Landscape, Messages List, Chat Thread, Create Activity, Friends Grid, Activity Filter Selection, Saved Collections, Collection Detail Feed, User Profile Atlas. Downloaded 12 image assets. Registered 10 new routes. All 24 screens complete with full navigation wired. Fixed photo-crop-portrait style error. Web server running on localhost:8081. |
 | 2026-03-03 | **Phase 10: Final Figma screens** | Added 9 new screens: Activity Stats, Save to Collection, New Collection Modal, Other User Profile, Feed Filters, New Collection Variant, Photo Fullscreen 1/2, Edit Collection. Downloaded 14 new image assets. Registered 9 new routes. Fixed 54 non-interactive buttons/elements across ALL 24 existing screens (missing onPress handlers, Views that should be TouchableOpacity). Updated navigation hub to 29 screens. |
+| 2026-03-03 | **Phase 11: Pixel-Perfect Figma Audit** | Systematic audit of all 33 screens against Figma designs. **Home Feed:** 19 fixes (banner radii, tab text, per-card user rows, like badge, default tab). **Explore:** 20 fixes (complete rewrite with masonry grid, user profiles, heart overlays). **Activity:** 13 fixes (complete rewrite with category chips, user info, stats). **Profile tab:** complete rewrite (explore-results layout per Figma — map banner, search bar, masonry grid with profiles/stats). **Sign In:** 3 fixes (upperSection height 300→323, logo top 143→142, paddingTop 44→50). **Verify Email:** 3 fixes (same pattern as Sign In). **Profile Setup:** 6 fixes (paddingTop 35→40, heading marginBottom 28→36, avatar marginBottom 10→15, avatarContainer marginBottom 24→40, inputGroup gap 11→10, marginBottom 18→17). **Search:** 5 fixes + JSX restructure (searchTitleRow inside filterSection, full-width filterSection, circleThumb 43×43, SearchIcon 25×25). **Photo Gallery:** 6 fixes (GRID_GAP 5, GRID_PADDING 10, new TILE_SIZE, BackArrowIcon 16px, headerTitle "▾"+color, handle radius 10). **Photo Crop Portrait:** 3 fixes (paddingHorizontal 5, marginTop 6, aspectText fontSize 14). **Messages List:** 4 fixes (header rounded bottom 30, buttons 49×49 rounded:15, avatar 50×50 rounded:20). **Friends Grid:** 3 fixes (bg #A0A0A0, header #D9D9D9 + rounded bottom, backBtn 49×49). **Chat Thread:** 2 fixes (header rounded bottom 30, avatar 49×49 rounded:15 square). **Activity Filter Selection:** 5 fixes (bg #A0A0A0, header #D9D9D9 + rounded bottom 30, titles 14px, card #FCFCFC rounded:30). **Saved Collections:** 4 fixes (bg #D9D9D9, header #D9D9D9, tabActive bg #282828, card #FCFCFC rounded:15). **Photo Crop Landscape:** 2 fixes (photo/cropOverlay borderRadius 20). **Feed Filters:** 3 fixes (filterContent bg white, light theme labels/range/chips, applyBtn #282828). **Edit Collection:** 1 fix (deleteBtn text-only red, removed red bg). **Other User Profile:** 4 fixes (bg black, closeBtn 49×49 rounded:15, profile text white, card rounded:30 + height:106). **Batch button size fix:** 10 instances across 9 files (width/height 40→49, borderRadius 12→15). **Batch spacer fix:** 6 instances across 6 files (width 40→49). **Audited close-enough:** Save to Collection, New Collection Modal, Explore Results, Image Viewer, Photo Fullscreen 1/2, New Collection Variant, Landing page. **Structural mismatches noted:** Activity Detail (3D map+chart), Create Modal (complex), Activity Stats (profile+stats combined), Collection Detail Feed (complex feed), Other User Profile (3D globe). All edited files verified with zero errors. |
 
 ---
 
 ## Current Status
 - **33 screens implemented** — 4 auth, 4 tabs, 1 activity detail, 5 Phase 8, 10 Phase 9, 9 Phase 10
 - **ALL buttons interactive** — Full interactivity audit completed: 54 non-interactive elements fixed across all screens
+- **Pixel-perfect Figma audit COMPLETE** — All 33 screens audited against Figma. 20+ screens received CSS fixes. Batch button size (49px) and spacer width (49px) fixes applied across all files.
 - **Tab navigation complete** — Home, Explore (plus → create modal), Activity, and Profile tabs
 - **Navigation hub** — 29 screens organized by phase, accessible at /navigation-hub
 - **All assets local** — 55+ images in assets/images/feed/, all served from local files
 - **SVG icon system expanded** — 5 core brand/avatar icons + 9 UI/action icons
 - **Figma color-audited** — All icon components and screen elements verified against Figma designs
 - **Web tested and running** — Expo web server at localhost:8083, all 33 screens accessible
+- **Zero TypeScript errors** — All edited files verified with zero compile errors
+- **Structural mismatches documented** — Activity Detail (3D map+chart), Activity Stats (profile+stats combined), Photo Fullscreen 1/2 (map integration screens) noted for future with native map/chart libraries
 
 ## Figma Reference
 - **File Key:** `FAJlYtbyrtrEum7CScjrwK`

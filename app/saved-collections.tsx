@@ -184,7 +184,7 @@ export default function SavedCollectionsScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#D9D9D9',
   },
   header: {
     flexDirection: 'row',
@@ -192,12 +192,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#D9D9D9',
   },
   backBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+    width: 49,
+    height: 49,
+    borderRadius: 15,
     backgroundColor: '#CFD0D1',
     alignItems: 'center',
     justifyContent: 'center',
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 12,
     gap: 12,
-    backgroundColor: '#F2F2F2',
+    backgroundColor: '#D9D9D9',
   },
   tab: {
     paddingVertical: 8,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   tabActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#282828',
   },
   tabText: {
     fontFamily: 'Inter',
@@ -257,8 +257,8 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   collectionCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+    backgroundColor: '#FCFCFC',
+    borderRadius: 15,
     overflow: 'hidden',
   },
   collage: {

@@ -48,7 +48,7 @@ export default function UserProfileAtlasScreen() {
           <BackArrowIcon width={20} height={20} color="#282828" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Profile</Text>
-        <View style={{ width: 40 }} />
+        <View style={{ width: 49 }} />
       </View>
 
       <ScrollView
@@ -162,9 +162,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2',
   },
   backBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+    width: 49,
+    height: 49,
+    borderRadius: 15,
     backgroundColor: '#CFD0D1',
     alignItems: 'center',
     justifyContent: 'center',

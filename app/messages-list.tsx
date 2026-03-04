@@ -159,6 +159,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D9',
     paddingHorizontal: 10,
     paddingBottom: 12,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
   headerContent: {
     flexDirection: 'row',
@@ -166,9 +168,9 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   backBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+    width: 49,
+    height: 49,
+    borderRadius: 15,
     backgroundColor: '#CFD0D1',
     alignItems: 'center',
     justifyContent: 'center',
@@ -190,9 +192,9 @@ const styles = StyleSheet.create({
     color: '#282828',
   },
   filterBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
+    width: 49,
+    height: 49,
+    borderRadius: 15,
     backgroundColor: '#CFD0D1',
     alignItems: 'center',
     justifyContent: 'center',
@@ -216,9 +218,9 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   avatar: {
-    width: 45,
-    height: 45,
-    borderRadius: 22.5,
+    width: 50,
+    height: 50,
+    borderRadius: 20,
   },
   unreadDot: {
     position: 'absolute',

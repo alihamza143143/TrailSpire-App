@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,9 @@ import {
   Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../src/constants/theme';
 import { HeartIcon } from '../../src/components/icons/HeartIcon';
-import { ArrowUpRightIcon } from '../../src/components/icons/ArrowUpRightIcon';
-import { MapPinIcon } from '../../src/components/icons/MapPinIcon';
+import { PlusIcon } from '../../src/components/icons/PlusIcon';
 
 const { width: SCREEN_W } = Dimensions.get('window');
 
@@ -34,32 +32,85 @@ const IMAGES = {
   profile3: require('../../assets/images/feed/profile_photo3.png'),
 };
 
-const TAGGED_USERS = [
-  { id: '1', name: '@ashley', image: IMAGES.profile1 },
-  { id: '2', name: '@marco', image: IMAGES.profile2 },
-  { id: '3', name: '@elena', image: IMAGES.profile3 },
-];
+const CATEGORY_CHIPS = ['Sat', 'Run', 'Cycle', 'Hike', 'Ski'];
 
 interface GalleryItem {
   id: string;
   image: any;
   height: number;
+  username: string;
+  profileImage: any;
+  activityType?: string;
+  elevation?: string;
+  distance?: string;
+  time?: string;
 }
 
 const GALLERY_LEFT: GalleryItem[] = [
-  { id: '1', image: IMAGES.landscape, height: 240 },
-  { id: '2', image: IMAGES.tent, height: 200 },
-  { id: '3', image: IMAGES.iceland, height: 260 },
+  { id: '1', image: IMAGES.landscape, height: 240, username: '@carl.noto', profileImage: IMAGES.profile1 },
+  { id: '2', image: IMAGES.tent, height: 200, username: '@nik_66', profileImage: IMAGES.profile2, activityType: 'Activity Data', elevation: '1800mt', distance: '11km', time: '2d 5h' },
+  { id: '3', image: IMAGES.iceland, height: 260, username: '@gioforty', profileImage: IMAGES.profile3 },
 ];
 
 const GALLERY_RIGHT: GalleryItem[] = [
-  { id: '4', image: IMAGES.hikerSnow, height: 200 },
-  { id: '5', image: IMAGES.skiing, height: 260 },
-  { id: '6', image: IMAGES.adventure, height: 190 },
+  { id: '4', image: IMAGES.hikerSnow, height: 200, username: '@tony', profileImage: IMAGES.profile1, activityType: 'Activity Data', elevation: '1800mt', distance: '11km', time: '2d 5h' },
+  { id: '5', image: IMAGES.skiing, height: 260, username: '@_ashley', profileImage: IMAGES.profile2 },
+  { id: '6', image: IMAGES.adventure, height: 190, username: '@iamsimon', profileImage: IMAGES.profile3 },
 ];
 
 export default function ActivityScreen() {
   const router = useRouter();
+  const [selectedChip, setSelectedChip] = useState('Sat');
+
+  const renderGalleryCard = (item: GalleryItem) => (
+    <View key={item.id} style={styles.cardWrapper}>
+      {/* Per-card user row */}
+      <View style={styles.cardUserRow}>
+        <Image source={item.profileImage} style={styles.cardUserAvatar} />
+        <Text style={styles.cardUserName}>{item.username}</Text>
+      </View>
+      <TouchableOpacity
+        style={styles.galleryCard}
+        activeOpacity={0.85}
+        onPress={() => router.push('/image-viewer')}
+      >
+        <Image
+          source={item.image}
+          style={[styles.galleryImage, { height: item.height }]}
+          resizeMode="cover"
+        />
+        {/* Heart overlay */}
+        <View style={styles.heartOverlay}>
+          <HeartIcon width={16} height={16} color="#FFFFFF" />
+        </View>
+      </TouchableOpacity>
+      {/* Activity stats below card */}
+      {item.activityType && (
+        <View style={styles.cardStatsBlock}>
+          <Text style={styles.cardStatsTitle}>{item.activityType}</Text>
+          <View style={styles.cardStatRow}>
+            <Text style={styles.cardStatLabel}>Elevation</Text>
+            <View style={styles.cardStatBarContainer}>
+              <View style={[styles.cardStatBar, { width: '70%' }]} />
+            </View>
+            <Text style={styles.cardStatValue}>{item.elevation}</Text>
+          </View>
+          <View style={styles.cardStatRow}>
+            <Text style={styles.cardStatLabel}>Distance</Text>
+            <View style={styles.cardStatBarContainer}>
+              <View style={[styles.cardStatBar, { width: '85%' }]} />
+            </View>
+            <Text style={styles.cardStatValue}>{item.distance}</Text>
+          </View>
+          <View style={styles.cardStatRow}>
+            <Text style={styles.cardStatLabel}>Time</Text>
+            <View style={{ flex: 1 }} />
+            <Text style={styles.cardStatValue}>{item.time}</Text>
+          </View>
+        </View>
+      )}
+    </View>
+  );
 
   return (
     <View style={styles.screen}>
@@ -83,13 +134,42 @@ export default function ActivityScreen() {
           >
             <Text style={styles.backBtnText}>{'<'}</Text>
           </TouchableOpacity>
+          {/* Round badge button */}
+          <View style={styles.roundBadge} />
         </View>
+
+        {/* Category chips row */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.chipRow}
+          style={styles.chipScroll}
+        >
+          {CATEGORY_CHIPS.map((chip) => (
+            <TouchableOpacity
+              key={chip}
+              style={[styles.chipBtn, selectedChip === chip && styles.chipBtnActive]}
+              activeOpacity={0.7}
+              onPress={() => setSelectedChip(chip)}
+            >
+              <Text style={[styles.chipText, selectedChip === chip && styles.chipTextActive]}>{chip}</Text>
+            </TouchableOpacity>
+          ))}
+          <TouchableOpacity style={styles.chipAddBtn} activeOpacity={0.7}>
+            <PlusIcon width={16} height={16} color="#282828" />
+          </TouchableOpacity>
+        </ScrollView>
 
         {/* Activity Data Section */}
         <View style={styles.dataSection}>
           <Text style={styles.dataSectionTitle}>Activity Data</Text>
-
-          {/* Stats */}
+          <View style={styles.statRow}>
+            <Text style={styles.statLabel}>Elevation</Text>
+            <View style={styles.statBarContainer}>
+              <View style={[styles.statBar, { width: '70%' }]} />
+            </View>
+            <Text style={styles.statValue}>2550mt</Text>
+          </View>
           <View style={styles.statRow}>
             <Text style={styles.statLabel}>Distance</Text>
             <View style={styles.statBarContainer}>
@@ -97,39 +177,31 @@ export default function ActivityScreen() {
             </View>
             <Text style={styles.statValue}>33km</Text>
           </View>
-
-          <View style={styles.statRow}>
-            <Text style={styles.statLabel}>Elevation</Text>
-            <View style={styles.statBarContainer}>
-              <View style={[styles.statBarWave]} />
-            </View>
-            <Text style={styles.statValue}>2550mt</Text>
-          </View>
-
           <View style={styles.statRow}>
             <Text style={styles.statLabel}>Time</Text>
             <View style={styles.statBarContainer}>
-              <View style={[styles.statBar, { width: '60%', backgroundColor: '#CFD0D1' }]} />
+              <View style={[styles.statBar, { width: '60%' }]} />
             </View>
             <Text style={styles.statValue}>5d 3h</Text>
           </View>
         </View>
 
-        {/* Tagged Users */}
-        <View style={styles.taggedSection}>
-          <Text style={styles.taggedTitle}>Tagged</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.taggedRow}
-          >
-            {TAGGED_USERS.map((user) => (
-              <TouchableOpacity key={user.id} style={styles.taggedItem} activeOpacity={0.7} onPress={() => router.push('/other-user-profile')}>
-                <Image source={user.image} style={styles.taggedImage} />
-                <Text style={styles.taggedName}>{user.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+        {/* User info section */}
+        <View style={styles.userInfoSection}>
+          <View style={styles.userInfoRow}>
+            <Image source={IMAGES.profile1} style={styles.userInfoAvatar} />
+            <View>
+              <Text style={styles.userInfoName}>@georyu</Text>
+              <Text style={styles.userInfoLabel}>Trail Running</Text>
+            </View>
+          </View>
+          {/* Follower photos stack */}
+          <View style={styles.followerStack}>
+            <Image source={IMAGES.profile1} style={[styles.followerAvatar, { left: 0 }]} />
+            <Image source={IMAGES.profile2} style={[styles.followerAvatar, { left: 14 }]} />
+            <Image source={IMAGES.profile3} style={[styles.followerAvatar, { left: 28 }]} />
+            <Text style={styles.followerMore}>+2</Text>
+          </View>
         </View>
 
         {/* Full-width feature image */}
@@ -139,45 +211,23 @@ export default function ActivityScreen() {
             style={styles.featureImage}
             resizeMode="cover"
           />
-          <View style={styles.featureOverlay}>
-            <View style={styles.likeBadge}>
-              <HeartIcon width={14} height={14} color="#007AFF" filled />
-              <Text style={styles.likeCount}>1.2k</Text>
-            </View>
-            <TouchableOpacity style={styles.arrowBadge} activeOpacity={0.7} onPress={() => router.push('/activity-detail')}>
-              <ArrowUpRightIcon width={14} height={14} color="#007AFF" />
-            </TouchableOpacity>
+          <View style={styles.featureHeartOverlay}>
+            <HeartIcon width={16} height={16} color="#FFFFFF" />
           </View>
         </View>
 
-        {/* Photo Gallery - Masonry */}
+        {/* Photo Gallery - Masonry with per-card profiles */}
         <View style={styles.galleryContainer}>
           <View style={styles.galleryColumn}>
-            {GALLERY_LEFT.map((item) => (
-              <TouchableOpacity key={item.id} style={styles.galleryCard} activeOpacity={0.85} onPress={() => router.push('/image-viewer')}>
-                <Image
-                  source={item.image}
-                  style={[styles.galleryImage, { height: item.height }]}
-                  resizeMode="cover"
-                />
-              </TouchableOpacity>
-            ))}
+            {GALLERY_LEFT.map(renderGalleryCard)}
           </View>
           <View style={styles.galleryColumn}>
-            {GALLERY_RIGHT.map((item) => (
-              <TouchableOpacity key={item.id} style={styles.galleryCard} activeOpacity={0.85} onPress={() => router.push('/image-viewer')}>
-                <Image
-                  source={item.image}
-                  style={[styles.galleryImage, { height: item.height }]}
-                  resizeMode="cover"
-                />
-              </TouchableOpacity>
-            ))}
+            {GALLERY_RIGHT.map(renderGalleryCard)}
           </View>
         </View>
 
         {/* Bottom spacer */}
-        <View style={{ height: 100 }} />
+        <View style={{ height: 90 }} />
       </ScrollView>
 
       {/* Floating Add Button */}
@@ -201,9 +251,9 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
 
-  // Map
+  /* ── Map ── */
   mapContainer: {
-    height: 680,
+    height: 683,
     position: 'relative',
   },
   mapImage: {
@@ -212,7 +262,7 @@ const styles = StyleSheet.create({
   },
   backBtn: {
     position: 'absolute',
-    top: 50,
+    top: 127,
     left: 12,
     width: 44,
     height: 44,
@@ -226,29 +276,75 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#282828',
   },
+  roundBadge: {
+    position: 'absolute',
+    bottom: 0,
+    left: 144,
+    width: 50,
+    height: 50,
+    borderRadius: 30,
+    backgroundColor: '#B8B8B8',
+  },
 
-  // Data Section
-  dataSection: {
+  /* ── Category chips (Figma: row of Sat/Run/Cycle + add button) ── */
+  chipScroll: {
+    maxHeight: 44,
+    marginTop: 10,
+  },
+  chipRow: {
     paddingHorizontal: 14,
-    paddingVertical: 16,
+    gap: 8,
+    alignItems: 'center',
+  },
+  chipBtn: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    backgroundColor: '#E8E8E6',
+  },
+  chipBtnActive: {
+    backgroundColor: '#282828',
+  },
+  chipText: {
+    fontSize: 13,
+    fontWeight: '500',
+    color: '#838385',
+  },
+  chipTextActive: {
+    color: '#FFFFFF',
+  },
+  chipAddBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#E8E8E6',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  /* ── Data Section ── */
+  dataSection: {
+    paddingHorizontal: 13,
+    paddingTop: 14,
+    paddingBottom: 8,
   },
   dataSectionTitle: {
     fontSize: 10,
     fontWeight: '700',
     color: '#282828',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   statRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
-    gap: 8,
+    marginBottom: 6,
+    gap: 6,
   },
   statLabel: {
     fontSize: 8,
     fontWeight: '600',
     color: '#282828',
-    width: 50,
+    width: 48,
   },
   statBarContainer: {
     flex: 1,
@@ -262,50 +358,62 @@ const styles = StyleSheet.create({
     backgroundColor: '#282828',
     borderRadius: 20,
   },
-  statBarWave: {
-    height: '100%',
-    width: '70%',
-    backgroundColor: '#282828',
-    borderRadius: 20,
-  },
   statValue: {
     fontSize: 8,
     fontWeight: '600',
     color: '#282828',
-    width: 40,
+    width: 36,
     textAlign: 'right',
   },
 
-  // Tagged
-  taggedSection: {
-    paddingHorizontal: 14,
-    marginBottom: 12,
+  /* ── User info section (Figma: @georyu + trail running + follower stack) ── */
+  userInfoSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 13,
+    marginBottom: 10,
   },
-  taggedTitle: {
-    fontSize: 10,
+  userInfoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  userInfoAvatar: {
+    width: 36,
+    height: 36,
+    borderRadius: 12,
+  },
+  userInfoName: {
+    fontSize: 13,
     fontWeight: '700',
     color: '#282828',
-    marginBottom: 8,
   },
-  taggedRow: {
-    gap: 10,
-  },
-  taggedItem: {
-    alignItems: 'center',
-  },
-  taggedImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    marginBottom: 4,
-  },
-  taggedName: {
-    fontSize: 9,
-    color: '#282828',
+  userInfoLabel: {
+    fontSize: 10,
     fontWeight: '500',
+    color: '#838385',
+    marginTop: 1,
+  },
+  followerStack: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 70,
+  },
+  followerAvatar: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    position: 'absolute',
+  },
+  followerMore: {
+    marginLeft: 48,
+    fontSize: 8,
+    fontWeight: '600',
+    color: '#C9C9C9',
   },
 
-  // Feature
+  /* ── Feature image ── */
   featureSection: {
     marginHorizontal: 2,
     marginBottom: 8,
@@ -315,40 +423,21 @@ const styles = StyleSheet.create({
   },
   featureImage: {
     width: '100%',
-    height: 260,
+    height: 258,
   },
-  featureOverlay: {
+  featureHeartOverlay: {
     position: 'absolute',
-    bottom: 12,
-    right: 12,
-    flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
-  },
-  likeBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.9)',
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    gap: 4,
-  },
-  likeCount: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#007AFF',
-  },
-  arrowBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 8,
-    backgroundColor: 'rgba(255,255,255,0.85)',
+    bottom: 10,
+    right: 10,
+    width: 37,
+    height: 37,
+    borderRadius: 10,
+    backgroundColor: 'rgba(0,0,0,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
-  // Gallery
+  /* ── Gallery masonry ── */
   galleryContainer: {
     flexDirection: 'row',
     paddingHorizontal: 2,
@@ -356,17 +445,91 @@ const styles = StyleSheet.create({
   },
   galleryColumn: {
     flex: 1,
+  },
+  cardWrapper: {
+    marginBottom: 4,
+  },
+  cardUserRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+    paddingLeft: 2,
     gap: 6,
+  },
+  cardUserAvatar: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+  },
+  cardUserName: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#282828',
   },
   galleryCard: {
     borderRadius: 20,
     overflow: 'hidden',
+    position: 'relative',
   },
   galleryImage: {
     width: '100%',
   },
+  heartOverlay: {
+    position: 'absolute',
+    bottom: 8,
+    right: 8,
+    width: 37,
+    height: 37,
+    borderRadius: 10,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-  // Floating Add
+  /* ── Per-card stats (Figma: Activity Data, 8px labels) ── */
+  cardStatsBlock: {
+    paddingHorizontal: 4,
+    paddingVertical: 6,
+  },
+  cardStatsTitle: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#282828',
+    marginBottom: 4,
+  },
+  cardStatRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 3,
+  },
+  cardStatLabel: {
+    fontSize: 8,
+    fontWeight: '600',
+    color: '#282828',
+    width: 42,
+  },
+  cardStatBarContainer: {
+    flex: 1,
+    height: 6,
+    borderRadius: 20,
+    backgroundColor: '#CFD0D1',
+    marginHorizontal: 4,
+    overflow: 'hidden',
+  },
+  cardStatBar: {
+    height: '100%',
+    borderRadius: 20,
+    backgroundColor: '#282828',
+  },
+  cardStatValue: {
+    fontSize: 8,
+    fontWeight: '600',
+    color: '#282828',
+    textAlign: 'right',
+    minWidth: 30,
+  },
+
+  /* ── Floating Add ── */
   floatingAdd: {
     position: 'absolute',
     bottom: 100,

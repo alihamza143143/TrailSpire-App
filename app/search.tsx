@@ -87,20 +87,20 @@ export default function SearchScreen() {
           contentContainerStyle={styles.scrollInner}
           keyboardShouldPersistTaps="handled"
         >
-          {/* Search Title + Close */}
-          <View style={styles.searchTitleRow}>
-            <Text style={styles.searchTitle}>Search</Text>
-            <TouchableOpacity
-              onPress={() => router.back()}
-              activeOpacity={0.7}
-              style={styles.closeButton}
-            >
-              <Text style={styles.closeIcon}>✕</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Activity Type Filters */}
+          {/* Activity Type Filters — includes Search title */}
           <View style={styles.filterSection}>
+            {/* Search Title + Close */}
+            <View style={styles.searchTitleRow}>
+              <Text style={styles.searchTitle}>Search</Text>
+              <TouchableOpacity
+                onPress={() => router.back()}
+                activeOpacity={0.7}
+                style={styles.closeButton}
+              >
+                <Text style={styles.closeIcon}>✕</Text>
+              </TouchableOpacity>
+            </View>
+
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -137,7 +137,7 @@ export default function SearchScreen() {
                 activeOpacity={0.7}
                 onPress={() => router.push('/explore-results')}
               >
-                <SearchIcon width={18} height={18} color="#282828" />
+                <SearchIcon width={25} height={25} color="#282828" />
                 <Text style={styles.recentText}>
                   <Text style={styles.recentType}>{item.type} - </Text>
                   <Text style={styles.recentLocation}>{item.location}</Text>
@@ -250,9 +250,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   circleThumb: {
-    width: 31,
-    height: 31,
-    borderRadius: 15,
+    width: 43,
+    height: 43,
+    borderRadius: 21.5,
     backgroundColor: '#A0A0A0',
   },
   contentArea: {
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 18,
   },
   searchTitle: {
     fontFamily: 'Inter',
@@ -293,8 +293,10 @@ const styles = StyleSheet.create({
   filterSection: {
     backgroundColor: '#D8D8D8',
     borderRadius: 40,
-    paddingVertical: 20,
-    paddingHorizontal: 16,
+    paddingTop: 17,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    marginHorizontal: -20,
     marginBottom: 16,
   },
   activityRow: {

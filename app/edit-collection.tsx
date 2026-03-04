@@ -100,7 +100,7 @@ export default function EditCollectionScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#282828' },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 12 },
-  backBtn: { width: 40, height: 40, borderRadius: 12, backgroundColor: '#3A3A3A', alignItems: 'center', justifyContent: 'center' },
+  backBtn: { width: 49, height: 49, borderRadius: 15, backgroundColor: '#3A3A3A', alignItems: 'center', justifyContent: 'center' },
   headerTitle: { fontFamily: 'Inter', fontSize: 18, fontWeight: '600', color: '#FFFFFF' },
   doneBtn: { fontFamily: 'Inter', fontSize: 16, fontWeight: '600', color: '#007AFF' },
   scrollContent: { padding: 16, paddingBottom: 40 },
@@ -116,6 +116,6 @@ const styles = StyleSheet.create({
   inviteRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(255,255,255,0.1)' },
   inviteText: { fontFamily: 'Inter', fontSize: 16, fontWeight: '600', color: '#007AFF' },
   inviteChevron: { fontSize: 22, color: '#007AFF' },
-  deleteBtn: { backgroundColor: '#D92121', borderRadius: 14, paddingVertical: 16, alignItems: 'center', marginTop: 40 },
-  deleteBtnText: { fontFamily: 'Inter', fontSize: 16, fontWeight: '700', color: '#FFFFFF' },
+  deleteBtn: { borderRadius: 14, paddingVertical: 16, alignItems: 'center', marginTop: 40 },
+  deleteBtnText: { fontFamily: 'Inter', fontSize: 16, fontWeight: '700', color: '#D92121' },
 });

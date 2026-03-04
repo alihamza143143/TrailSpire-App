@@ -13,9 +13,10 @@ import { useRouter } from 'expo-router';
 import { BackArrowIcon } from '../src/components/icons/BackArrowIcon';
 
 const { width: SCREEN_W } = Dimensions.get('window');
-const GRID_GAP = 2;
+const GRID_GAP = 5;
 const NUM_COLS = 3;
-const TILE_SIZE = (SCREEN_W - GRID_GAP * (NUM_COLS + 1)) / NUM_COLS;
+const GRID_PADDING = 10;
+const TILE_SIZE = (SCREEN_W - 2 * GRID_PADDING - GRID_GAP * (NUM_COLS - 1)) / NUM_COLS;
 
 const GALLERY_IMAGES = [
   { id: '1', source: require('../assets/images/feed/gallery_1.png') },
@@ -81,10 +82,10 @@ export default function PhotoGalleryScreen() {
           activeOpacity={0.7}
           onPress={() => router.back()}
         >
-          <BackArrowIcon width={20} height={20} color="#FFFFFF" />
+          <BackArrowIcon width={16} height={16} color="#F2F2F2" />
         </TouchableOpacity>
 
-        <Text style={styles.headerTitle}>All photos</Text>
+        <Text style={styles.headerTitle}>All photos ▾</Text>
 
         <TouchableOpacity style={styles.addBtn} activeOpacity={0.7} onPress={() => router.push('/photo-crop-portrait')}>
           <Text style={styles.addBtnText}>
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
   handle: {
     width: 46,
     height: 6,
-    borderRadius: 3,
+    borderRadius: 10,
     backgroundColor: '#CFD0D1',
   },
 
@@ -148,24 +149,21 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '600',
     fontSize: 16,
-    color: '#FFFFFF',
+    color: '#F2F2F2',
   },
   addBtn: {
-    paddingHorizontal: 14,
     paddingVertical: 8,
-    borderRadius: 16,
-    backgroundColor: '#007AFF',
   },
   addBtnText: {
     fontFamily: 'Inter',
-    fontWeight: '600',
-    fontSize: 13,
-    color: '#FFFFFF',
+    fontWeight: '500',
+    fontSize: 14,
+    color: '#F2F2F2',
   },
 
   // Grid
   gridContainer: {
-    paddingHorizontal: GRID_GAP,
+    paddingHorizontal: GRID_PADDING,
     paddingBottom: 100,
   },
   gridRow: {

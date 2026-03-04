@@ -47,7 +47,7 @@ export default function ActivityStatsScreen() {
           <BackArrowIcon width={20} height={20} color="#282828" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Activity Stats</Text>
-        <View style={{ width: 40 }} />
+        <View style={{ width: 49 }} />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
@@ -123,7 +123,7 @@ export default function ActivityStatsScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: '#F2F2F2' },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 12 },
-  backBtn: { width: 40, height: 40, borderRadius: 12, backgroundColor: '#CFD0D1', alignItems: 'center', justifyContent: 'center' },
+  backBtn: { width: 49, height: 49, borderRadius: 15, backgroundColor: '#CFD0D1', alignItems: 'center', justifyContent: 'center' },
   headerTitle: { fontFamily: 'Inter', fontSize: 20, fontWeight: '600', color: '#282828' },
   scrollContent: { padding: 16, paddingBottom: 30 },
   periodTabs: { flexDirection: 'row', backgroundColor: '#FFFFFF', borderRadius: 12, padding: 4, marginBottom: 20 },

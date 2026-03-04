@@ -39,34 +39,30 @@ const FEED_IMAGES = {
   profile3: require('../../assets/images/feed/profile_photo3.png'),
 };
 
-const STORY_USERS = [
-  { id: '1', name: '@ashley', image: FEED_IMAGES.profile1 },
-  { id: '2', name: '@marco', image: FEED_IMAGES.profile2 },
-  { id: '3', name: '@elena', image: FEED_IMAGES.profile3 },
-  { id: '4', name: '@josh', image: FEED_IMAGES.profile1 },
-  { id: '5', name: '@nina', image: FEED_IMAGES.profile2 },
-];
-
 interface FeedItem {
   id: string;
   image: any;
   likes: number;
   height: number;
-  username?: string;
-  location?: string;
+  username: string;
+  profileImage: any;
+  activityType: string;
+  distance: string;
+  elevation: string;
+  time: string;
 }
 
 const FEED_DATA: FeedItem[] = [
-  { id: '1', image: FEED_IMAGES.hikerSnow, likes: 340, height: 280, username: '@gary', location: 'Alps, Switzerland' },
-  { id: '2', image: FEED_IMAGES.skiing, likes: 0, height: 380, username: '@marco', location: 'Chamonix' },
-  { id: '3', image: FEED_IMAGES.landscape, likes: 704, height: 320 },
-  { id: '4', image: FEED_IMAGES.snow, likes: 1200, height: 400, username: '@elena', location: 'Norway' },
-  { id: '5', image: FEED_IMAGES.trailSunset, likes: 234, height: 350 },
+  { id: '1', image: FEED_IMAGES.hikerSnow, likes: 340, height: 280, username: '@_ashley', profileImage: FEED_IMAGES.profile1, activityType: 'Hiking', distance: '15km', elevation: '1200m', time: '5h 30min' },
+  { id: '2', image: FEED_IMAGES.skiing, likes: 0, height: 380, username: '@tony', profileImage: FEED_IMAGES.profile2, activityType: '4x4 Overlanding', distance: '33km', elevation: '450m', time: '3h 15min' },
+  { id: '3', image: FEED_IMAGES.landscape, likes: 704, height: 320, username: '@tomtom8', profileImage: FEED_IMAGES.profile3, activityType: 'Backcountry Skiing', distance: '12km', elevation: '900m', time: '4h 00min' },
+  { id: '4', image: FEED_IMAGES.snow, likes: 1200, height: 400, username: '@iamsimon', profileImage: FEED_IMAGES.profile1, activityType: 'Free Skiing', distance: '8km', elevation: '1500m', time: '2h 45min' },
+  { id: '5', image: FEED_IMAGES.trailSunset, likes: 234, height: 350, username: '@elena', profileImage: FEED_IMAGES.profile2, activityType: 'Trail Running', distance: '21km', elevation: '600m', time: '1h 50min' },
 ];
 
 export default function HomeScreen() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'explore' | 'follow'>('explore');
+  const [activeTab, setActiveTab] = useState<'explore' | 'follow'>('follow');
 
   return (
     <View style={styles.screen}>
@@ -115,7 +111,7 @@ export default function HomeScreen() {
       {/* Tabs: Explore / You Follow */}
       <View style={styles.tabRow}>
         <TouchableOpacity
-          style={[styles.tab, activeTab === 'explore' && styles.tabActive]}
+          style={styles.tab}
           onPress={() => setActiveTab('explore')}
           activeOpacity={0.7}
         >
@@ -124,7 +120,7 @@ export default function HomeScreen() {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tab, activeTab === 'follow' && styles.tabActive]}
+          style={styles.tab}
           onPress={() => setActiveTab('follow')}
           activeOpacity={0.7}
         >
@@ -134,21 +130,6 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Story circles */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.storyRow}
-        style={styles.storyScroll}
-      >
-        {STORY_USERS.map((user) => (
-          <TouchableOpacity key={user.id} style={styles.storyItem} activeOpacity={0.7} onPress={() => router.push('/other-user-profile')}>
-            <Image source={user.image} style={styles.storyImage} />
-            <Text style={styles.storyName} numberOfLines={1}>{user.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-
       {/* Feed */}
       <ScrollView
         style={styles.feedScroll}
@@ -156,34 +137,64 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         {FEED_DATA.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.feedCard}
-            activeOpacity={0.85}
-            onPress={() => router.push('/activity-detail')}
-          >
-            <Image
-              source={item.image}
-              style={[styles.feedImage, { height: item.height }]}
-              resizeMode="cover"
-            />
-            {/* Overlay info */}
-            <View style={styles.feedOverlay}>
-              {item.likes > 0 && (
-                <View style={styles.likeBadge}>
-                  <HeartIcon width={14} height={14} color="#007AFF" filled />
-                  <Text style={styles.likeCount}>
-                    {item.likes >= 1000
-                      ? `${(item.likes / 1000).toFixed(1)}k`
-                      : item.likes}
-                  </Text>
+          <View key={item.id}>
+            {/* Per-card user info row */}
+            <TouchableOpacity
+              style={styles.feedUserRow}
+              activeOpacity={0.7}
+              onPress={() => router.push('/other-user-profile')}
+            >
+              <Image source={item.profileImage} style={styles.feedUserAvatar} />
+              <Text style={styles.feedUsername}>{item.username}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.feedCard}
+              activeOpacity={0.85}
+              onPress={() => router.push('/activity-detail')}
+            >
+              <Image
+                source={item.image}
+                style={[styles.feedImage, { height: item.height }]}
+                resizeMode="cover"
+              />
+              {/* Activity stats overlay — bottom left */}
+              <View style={styles.statsOverlay}>
+                <Text style={styles.statsActivityType}>{item.activityType}</Text>
+                <View style={styles.statsRow}>
+                  <Text style={styles.statsLabel}>Distance</Text>
+                  <Text style={styles.statsValue}>{item.distance}</Text>
                 </View>
-              )}
-              <TouchableOpacity style={styles.arrowBadge} activeOpacity={0.7} onPress={() => router.push('/activity-detail')}>
-                <ArrowUpRightIcon width={16} height={16} color="#007AFF" />
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
+                <View style={styles.statsProgressBar}>
+                  <View style={styles.statsProgressFill} />
+                </View>
+                <View style={styles.statsRow}>
+                  <Text style={styles.statsLabel}>Elevation</Text>
+                  <Text style={styles.statsValue}>{item.elevation}</Text>
+                </View>
+                <View style={styles.statsRow}>
+                  <Text style={styles.statsLabel}>Time</Text>
+                  <Text style={styles.statsValue}>{item.time}</Text>
+                </View>
+              </View>
+              {/* Like + action badges — bottom right */}
+              <View style={styles.feedOverlay}>
+                {item.likes > 0 && (
+                  <View style={styles.likeBadge}>
+                    <HeartIcon width={14} height={14} color="#007AFF" filled />
+                    <Text style={styles.likeCount}>
+                      {item.likes >= 1000
+                        ? `${(item.likes / 1000).toFixed(1)}k`
+                        : item.likes}
+                    </Text>
+                  </View>
+                )}
+                <TouchableOpacity style={styles.arrowBadge} activeOpacity={0.7} onPress={() => router.push('/activity-detail')}>
+                  <ArrowUpRightIcon width={18} height={18} color="#007AFF" />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+          </View>
         ))}
         {/* Bottom spacer for tab bar */}
         <View style={{ height: 100 }} />
@@ -197,12 +208,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#A0A0A0',
   },
-  // Activity Banner
+  // Activity Banner — Figma: rounded-tl/tr 50, rounded-bl/br 30
   activityBanner: {
-    marginHorizontal: 6,
+    marginHorizontal: 2,
     marginTop: 6,
     height: 110,
-    borderRadius: 30,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
     overflow: 'hidden',
   },
   activityBg: {
@@ -210,7 +224,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   activityBgImage: {
-    borderRadius: 30,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
     opacity: 0.8,
   },
   activityContent: {
@@ -244,10 +261,12 @@ const styles = StyleSheet.create({
     color: '#007AFF',
   },
   openButton: {
+    width: 85,
+    height: 46,
     backgroundColor: 'rgba(0,0,0,0.2)',
     borderRadius: 15,
-    paddingHorizontal: 22,
-    paddingVertical: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   openButtonText: {
     fontSize: 16,
@@ -296,54 +315,42 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
 
-  // Tabs
+  // Tabs — Figma: 20px bold, no underline, color diff only
   tabRow: {
     flexDirection: 'row',
     paddingHorizontal: 18,
-    marginBottom: 6,
+    marginBottom: 8,
     gap: 20,
   },
   tab: {
     paddingVertical: 6,
   },
-  tabActive: {
-    borderBottomWidth: 2,
-    borderBottomColor: '#282828',
-  },
   tabText: {
-    fontSize: 16,
-    fontWeight: '400',
+    fontSize: 20,
+    fontWeight: '700',
     color: '#838385',
   },
   tabTextActive: {
-    fontWeight: '600',
     color: '#282828',
   },
 
-  // Stories
-  storyScroll: {
-    maxHeight: 80,
-    marginBottom: 8,
-  },
-  storyRow: {
-    paddingHorizontal: 18,
-    gap: 12,
+  // Per-card user info row
+  feedUserRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    gap: 6,
   },
-  storyItem: {
-    alignItems: 'center',
-    width: 56,
+  feedUserAvatar: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
   },
-  storyImage: {
-    width: 48,
-    height: 48,
-    borderRadius: 14,
-    marginBottom: 4,
-  },
-  storyName: {
-    fontSize: 10,
+  feedUsername: {
+    fontSize: 13,
+    fontWeight: '700',
     color: '#282828',
-    fontWeight: '500',
   },
 
   // Feed
@@ -351,8 +358,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   feedContent: {
-    paddingHorizontal: 6,
-    gap: 8,
+    paddingHorizontal: 2,
+    gap: 4,
   },
   feedCard: {
     borderRadius: 20,
@@ -363,33 +370,81 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 20,
   },
+  // Activity stats overlay — bottom left on feed cards
+  statsOverlay: {
+    position: 'absolute',
+    bottom: 12,
+    left: 12,
+    backgroundColor: 'rgba(184,184,184,0.85)',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    minWidth: 110,
+  },
+  statsActivityType: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#282828',
+    marginBottom: 4,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 2,
+  },
+  statsLabel: {
+    fontSize: 8,
+    fontWeight: '600',
+    color: '#282828',
+  },
+  statsValue: {
+    fontSize: 8,
+    fontWeight: '600',
+    color: '#282828',
+    marginLeft: 8,
+  },
+  statsProgressBar: {
+    width: 87,
+    height: 6,
+    backgroundColor: 'rgba(0,0,0,0.15)',
+    borderRadius: 20,
+    marginVertical: 3,
+  },
+  statsProgressFill: {
+    width: 55,
+    height: 6,
+    backgroundColor: '#282828',
+    borderRadius: 20,
+  },
   feedOverlay: {
     position: 'absolute',
     bottom: 12,
     right: 12,
-    flexDirection: 'row',
+    flexDirection: 'column',
     gap: 8,
     alignItems: 'center',
   },
   likeBadge: {
+    width: 73,
+    height: 50,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.9)',
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    justifyContent: 'center',
+    backgroundColor: '#B8B8B8',
+    borderRadius: 15,
     gap: 4,
   },
   likeCount: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#007AFF',
+    color: '#282828',
   },
   arrowBadge: {
-    width: 32,
-    height: 32,
-    borderRadius: 10,
-    backgroundColor: 'rgba(255,255,255,0.9)',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#B8B8B8',
     alignItems: 'center',
     justifyContent: 'center',
   },
