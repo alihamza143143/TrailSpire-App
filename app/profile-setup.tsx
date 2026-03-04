@@ -52,7 +52,7 @@ export default function ProfileSetupScreen() {
               <Text style={styles.heading}>Set your profile</Text>
 
               {/* Avatar */}
-              <View style={styles.avatarContainer}>
+              <TouchableOpacity style={styles.avatarContainer} activeOpacity={0.7} onPress={() => {}}>
                 <View style={styles.avatar}>
                   <AvatarPlaceholderSvg width={48} height={48} color={Colors.textGray} />
                   {/* "+" overlay at top-right corner */}
@@ -62,7 +62,7 @@ export default function ProfileSetupScreen() {
                   </View>
                 </View>
                 <Text style={styles.avatarText}>Choose a profile picture</Text>
-              </View>
+              </TouchableOpacity>
 
               {/* Inputs */}
               <View style={styles.inputGroup}>

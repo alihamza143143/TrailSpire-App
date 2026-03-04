@@ -123,7 +123,7 @@ export default function ActivityDetailScreen() {
             contentContainerStyle={styles.taggedRow}
           >
             {TAGGED_USERS.map((user) => (
-              <TouchableOpacity key={user.id} style={styles.taggedItem} activeOpacity={0.7}>
+              <TouchableOpacity key={user.id} style={styles.taggedItem} activeOpacity={0.7} onPress={() => router.push('/other-user-profile')}>
                 <Image source={user.image} style={styles.taggedImage} />
                 <Text style={styles.taggedName}>{user.name}</Text>
               </TouchableOpacity>
@@ -143,34 +143,40 @@ export default function ActivityDetailScreen() {
               <HeartIcon width={14} height={14} color="#007AFF" filled />
               <Text style={styles.likeCount}>1.2k</Text>
             </View>
-            <TouchableOpacity style={styles.arrowBadge} activeOpacity={0.7}>
+            <TouchableOpacity style={styles.arrowBadge} activeOpacity={0.7} onPress={() => router.push('/save-to-collection')}>
               <ArrowUpRightIcon width={14} height={14} color="#007AFF" />
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Photo Gallery */}
+        <View style={styles.galleryHeader}>
+          <Text style={styles.galleryTitle}>Photos</Text>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => router.push('/photo-gallery')}>
+            <Text style={styles.galleryViewAll}>View All</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.galleryContainer}>
           <View style={styles.galleryColumn}>
             {GALLERY_LEFT.map((item) => (
-              <View key={item.id} style={styles.galleryCard}>
+              <TouchableOpacity key={item.id} style={styles.galleryCard} activeOpacity={0.85} onPress={() => router.push('/image-viewer')}>
                 <Image
                   source={item.image}
                   style={[styles.galleryImage, { height: item.height }]}
                   resizeMode="cover"
                 />
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
           <View style={styles.galleryColumn}>
             {GALLERY_RIGHT.map((item) => (
-              <View key={item.id} style={styles.galleryCard}>
+              <TouchableOpacity key={item.id} style={styles.galleryCard} activeOpacity={0.85} onPress={() => router.push('/image-viewer')}>
                 <Image
                   source={item.image}
                   style={[styles.galleryImage, { height: item.height }]}
                   resizeMode="cover"
                 />
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
@@ -334,6 +340,23 @@ const styles = StyleSheet.create({
   },
 
   // Gallery
+  galleryHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  galleryTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#282828',
+  },
+  galleryViewAll: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#007AFF',
+  },
   galleryContainer: {
     flexDirection: 'row',
     paddingHorizontal: 4,

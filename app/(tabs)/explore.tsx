@@ -72,7 +72,7 @@ export default function ExploreScreen() {
               <Text style={styles.locationName}>Oslo, Norway</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.searchBtn} activeOpacity={0.7}>
+          <TouchableOpacity style={styles.searchBtn} activeOpacity={0.7} onPress={() => router.push('/search')}>
             <SearchIcon width={18} height={18} color="#1F1F1F" />
           </TouchableOpacity>
         </View>
@@ -126,7 +126,7 @@ export default function ExploreScreen() {
                   <Text style={styles.cardLocation}>{item.location}</Text>
                 </View>
                 <View style={styles.cardActions}>
-                  <TouchableOpacity style={styles.actionBtn} activeOpacity={0.7}>
+                  <TouchableOpacity style={styles.actionBtn} activeOpacity={0.7} onPress={() => router.push('/activity-detail')}>
                     <ArrowUpRightIcon width={14} height={14} color="#007AFF" />
                   </TouchableOpacity>
                 </View>
@@ -152,7 +152,7 @@ export default function ExploreScreen() {
                   <Text style={styles.cardLocation}>{item.location}</Text>
                 </View>
                 <View style={styles.cardActions}>
-                  <TouchableOpacity style={styles.actionBtn} activeOpacity={0.7}>
+                  <TouchableOpacity style={styles.actionBtn} activeOpacity={0.7} onPress={() => router.push('/activity-detail')}>
                     <ArrowUpRightIcon width={14} height={14} color="#007AFF" />
                   </TouchableOpacity>
                 </View>

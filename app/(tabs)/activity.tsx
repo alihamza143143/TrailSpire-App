@@ -124,7 +124,7 @@ export default function ActivityScreen() {
             contentContainerStyle={styles.taggedRow}
           >
             {TAGGED_USERS.map((user) => (
-              <TouchableOpacity key={user.id} style={styles.taggedItem} activeOpacity={0.7}>
+              <TouchableOpacity key={user.id} style={styles.taggedItem} activeOpacity={0.7} onPress={() => router.push('/other-user-profile')}>
                 <Image source={user.image} style={styles.taggedImage} />
                 <Text style={styles.taggedName}>{user.name}</Text>
               </TouchableOpacity>
@@ -144,7 +144,7 @@ export default function ActivityScreen() {
               <HeartIcon width={14} height={14} color="#007AFF" filled />
               <Text style={styles.likeCount}>1.2k</Text>
             </View>
-            <TouchableOpacity style={styles.arrowBadge} activeOpacity={0.7}>
+            <TouchableOpacity style={styles.arrowBadge} activeOpacity={0.7} onPress={() => router.push('/activity-detail')}>
               <ArrowUpRightIcon width={14} height={14} color="#007AFF" />
             </TouchableOpacity>
           </View>
@@ -154,24 +154,24 @@ export default function ActivityScreen() {
         <View style={styles.galleryContainer}>
           <View style={styles.galleryColumn}>
             {GALLERY_LEFT.map((item) => (
-              <View key={item.id} style={styles.galleryCard}>
+              <TouchableOpacity key={item.id} style={styles.galleryCard} activeOpacity={0.85} onPress={() => router.push('/image-viewer')}>
                 <Image
                   source={item.image}
                   style={[styles.galleryImage, { height: item.height }]}
                   resizeMode="cover"
                 />
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
           <View style={styles.galleryColumn}>
             {GALLERY_RIGHT.map((item) => (
-              <View key={item.id} style={styles.galleryCard}>
+              <TouchableOpacity key={item.id} style={styles.galleryCard} activeOpacity={0.85} onPress={() => router.push('/image-viewer')}>
                 <Image
                   source={item.image}
                   style={[styles.galleryImage, { height: item.height }]}
                   resizeMode="cover"
                 />
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
@@ -181,7 +181,7 @@ export default function ActivityScreen() {
       </ScrollView>
 
       {/* Floating Add Button */}
-      <TouchableOpacity style={styles.floatingAdd} activeOpacity={0.8}>
+      <TouchableOpacity style={styles.floatingAdd} activeOpacity={0.8} onPress={() => router.push('/create-modal')}>
         <View style={styles.addLine1} />
         <View style={styles.addLine2} />
       </TouchableOpacity>

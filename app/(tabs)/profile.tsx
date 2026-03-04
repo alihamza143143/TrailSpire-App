@@ -69,7 +69,7 @@ export default function ProfileScreen() {
         {/* Profile Header */}
         <View style={styles.profileHeader}>
           {/* Settings gear icon */}
-          <TouchableOpacity style={styles.settingsBtn} activeOpacity={0.7}>
+          <TouchableOpacity style={styles.settingsBtn} activeOpacity={0.7} onPress={() => router.push('/messages-list')}>
             <Text style={styles.settingsIcon}>⚙</Text>
           </TouchableOpacity>
 
@@ -103,10 +103,10 @@ export default function ProfileScreen() {
 
           {/* Action buttons */}
           <View style={styles.actionRow}>
-            <TouchableOpacity style={styles.editBtn} activeOpacity={0.7}>
+            <TouchableOpacity style={styles.editBtn} activeOpacity={0.7} onPress={() => router.push('/profile-setup')}>
               <Text style={styles.editBtnText}>Edit Profile</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.stravaBtn} activeOpacity={0.7}>
+            <TouchableOpacity style={styles.stravaBtn} activeOpacity={0.7} onPress={() => router.push('/profile-setup')}>
               <StravaLogoSvg width={50} height={10} color="#FFFFFF" />
             </TouchableOpacity>
           </View>

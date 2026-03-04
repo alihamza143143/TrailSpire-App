@@ -123,16 +123,18 @@ export default function LandingScreen() {
         </View>
 
         {/* Support */}
-        <Text style={styles.supportText}>
-          Having issues?{' '}
-          <Text style={styles.supportBold}>Contact Support</Text>
-        </Text>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => {}}>
+          <Text style={styles.supportText}>
+            Having issues?{' '}
+            <Text style={styles.supportBold}>Contact Support</Text>
+          </Text>
+        </TouchableOpacity>
 
         {/* Legal */}
         <Text style={styles.legalText}>
           By continuing, you agree to ATLAS{' '}
-          <Text style={styles.legalBold}>Privacy Policy</Text> and{'\n'}
-          <Text style={styles.legalBold}>Terms of Service</Text>.
+          <Text style={styles.legalBold} onPress={() => {}}>Privacy Policy</Text> and{'\n'}
+          <Text style={styles.legalBold} onPress={() => {}}>Terms of Service</Text>.
         </Text>
       </ScrollView>
     </SafeAreaView>

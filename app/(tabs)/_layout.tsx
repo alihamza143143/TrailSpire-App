@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { GridIcon } from '../../src/components/icons/GridIcon';
 import { PlusIcon } from '../../src/components/icons/PlusIcon';
 import { CompassIcon } from '../../src/components/icons/CompassIcon';
 import { Colors } from '../../src/constants/theme';
 
 export default function TabsLayout() {
+  const router = useRouter();
+
   return (
     <Tabs
       screenOptions={{
@@ -39,6 +41,12 @@ export default function TabsLayout() {
               color={focused ? '#007AFF' : '#FFFFFF'}
             />
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.push('/create-modal');
+          },
         }}
       />
       <Tabs.Screen

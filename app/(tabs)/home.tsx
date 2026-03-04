@@ -99,15 +99,15 @@ export default function HomeScreen() {
 
       {/* Search + Filter Bar */}
       <View style={styles.searchSection}>
-        <TouchableOpacity style={styles.filterBtn} activeOpacity={0.7}>
+        <TouchableOpacity style={styles.filterBtn} activeOpacity={0.7} onPress={() => router.push('/feed-filters')}>
           <FilterIcon width={18} height={18} color="#1F1F1F" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.searchBar} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.searchBar} activeOpacity={0.8} onPress={() => router.push('/search')}>
           <Text style={styles.searchText}>Search Users</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.profileBtn} activeOpacity={0.7}>
+        <TouchableOpacity style={styles.profileBtn} activeOpacity={0.7} onPress={() => router.push('/(tabs)/profile')}>
           <Image source={FEED_IMAGES.profile1} style={styles.searchProfileImg} />
         </TouchableOpacity>
       </View>
@@ -142,7 +142,7 @@ export default function HomeScreen() {
         style={styles.storyScroll}
       >
         {STORY_USERS.map((user) => (
-          <TouchableOpacity key={user.id} style={styles.storyItem} activeOpacity={0.7}>
+          <TouchableOpacity key={user.id} style={styles.storyItem} activeOpacity={0.7} onPress={() => router.push('/other-user-profile')}>
             <Image source={user.image} style={styles.storyImage} />
             <Text style={styles.storyName} numberOfLines={1}>{user.name}</Text>
           </TouchableOpacity>
@@ -179,7 +179,7 @@ export default function HomeScreen() {
                   </Text>
                 </View>
               )}
-              <TouchableOpacity style={styles.arrowBadge} activeOpacity={0.7}>
+              <TouchableOpacity style={styles.arrowBadge} activeOpacity={0.7} onPress={() => router.push('/activity-detail')}>
                 <ArrowUpRightIcon width={16} height={16} color="#007AFF" />
               </TouchableOpacity>
             </View>

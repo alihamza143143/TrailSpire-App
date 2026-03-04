@@ -115,7 +115,7 @@ export default function VerifyEmailScreen() {
 
               <View style={styles.spacer} />
 
-              <TouchableOpacity activeOpacity={0.6} style={styles.resendContainer}>
+              <TouchableOpacity activeOpacity={0.6} style={styles.resendContainer} onPress={() => {}}>
                 <Text style={styles.resendText}>
                   Didn't receive the code?{' '}
                   <Text style={styles.resendBold}>Resend</Text>

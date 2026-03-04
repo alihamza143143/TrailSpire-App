@@ -134,10 +134,12 @@ export default function SignInScreen() {
 
               <View style={styles.spacer} />
 
-              <Text style={styles.supportText}>
-                Having issues?{' '}
-                <Text style={styles.supportBold}>Contact Support</Text>
-              </Text>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => {}}>
+                <Text style={styles.supportText}>
+                  Having issues?{' '}
+                  <Text style={styles.supportBold}>Contact Support</Text>
+                </Text>
+              </TouchableOpacity>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>

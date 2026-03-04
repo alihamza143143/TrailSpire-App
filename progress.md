@@ -123,6 +123,44 @@
 | 76 | Add Strava brand orange to theme | ✅ | Added `stravaOrange: '#FC4C02'` to Colors constants |
 | 77 | Update progress.md | ✅ | Phase 7 audit documented |
 
+## Phase 8: New Figma Screens — Search, Explore Results, Photo Gallery, Image Viewer, Create Modal
+| # | Task | Status | Notes |
+|---|------|--------|-------|
+| 78 | Fetch all 10 Figma design contexts | ✅ | Nodes 1:3768, 1:3932, 1:2761, 1:4825, 1:2062, 1:2152, 1:4437, 1:2249, 1:3139, 1:3402 |
+| 79 | Analyze Figma designs vs existing screens | ✅ | 5 screens already exist, 5 new screens identified |
+| 80 | Download new Figma image assets | ✅ | search_map, explore_map, explore_header, hero_snow_hiker, gallery_1–8, activity_types |
+| 81 | Create Search screen (search.tsx) | ✅ | Figma node 1:4437 — Map header, search bar, activity type filters, recent searches |
+| 82 | Create Explore Results screen (explore-results.tsx) | ✅ | Figma node 1:4825 — Oslo Norway, 235 activities found, masonry grid with profile badges, stats, likes |
+| 83 | Create Photo Gallery screen (photo-gallery.tsx) | ✅ | Figma node 1:2249 — Dark bg, drag handle, 3-column grid, multi-select with ADD button |
+| 84 | Create Image Viewer screen (image-viewer.tsx) | ✅ | Figma node 1:3139 — Full-screen rounded image, close button, save/share actions |
+| 85 | Create Create Modal screen (create-modal.tsx) | ✅ | Figma node 1:3402 — Transparent modal, map with pulse rings, expanded bottom bar with Post/Library options |
+| 86 | Register new routes in root layout | ✅ | Added search, explore-results, photo-gallery, image-viewer (modals) + create-modal (transparentModal) |
+| 87 | Wire navigation across all screens | ✅ | Search bar → search, plus tab → create-modal, gallery → photo-gallery, photos → image-viewer, explore → explore-results |
+| 88 | Activity detail gallery interactivity | ✅ | Gallery items touchable → image-viewer, "View All" → photo-gallery |
+| 89 | Update progress.md | ✅ | Phase 8 documented |
+
+## Phase 9: Additional Figma Screens — Messaging, Collections, Profiles, Photo Cropping
+| # | Task | Status | Notes |
+|---|------|--------|-------|
+| 90 | Launch Expo web server | ✅ | `npx expo start --web` running on localhost:8081 for live testing |
+| 91 | Fetch 10 new Figma design contexts | ✅ | Nodes 1:2276, 1:5230, 1:5889, 1:2704, 1:5275, 1:5334, 1:5414, 1:5507, 1:2303, 1:2330 |
+| 92 | Analyze all 10 screens via subagent | ✅ | Comprehensive analysis of designs, elements, colors, layouts, navigation |
+| 93 | Download image assets (12 files) | ✅ | mountains_hero, chat avatars, activity previews, friend avatars, collection previews, atlas map |
+| 94 | Create Photo Crop Portrait screen (photo-crop-portrait.tsx) | ✅ | Figma node 1:2276 — Aspect ratio selector (9:16/16:9/3:4/4:3/1:1), photo preview with grid, back/next nav |
+| 95 | Create Messages List screen (messages-list.tsx) | ✅ | Figma node 1:5230 — 6 conversations with avatars, unread dots, timestamps, search/filter, navigation to chat-thread |
+| 96 | Create Chat Thread screen (chat-thread.tsx) | ✅ | Figma node 1:5889 — Conversation with Alejandra Delgado, message bubbles (sent/received), audio waveform, message input toolbar |
+| 97 | Create Create Activity screen (create-activity.tsx) | ✅ | Figma node 1:2704 — Date card (16 MAR, cycling, 87km), Import GPX/Select Activity buttons, description textarea, tag friends, difficulty selector, post button |
+| 98 | Create Friends Grid screen (friends-grid.tsx) | ✅ | Figma node 1:5275 — 4×4 grid of friend cards (67×67px avatars), search bar, filter button, profile navigation |
+| 99 | Create Activity Filter Selection screen (activity-filter-selection.tsx) | ✅ | Figma node 1:5334 — Selected cards at top, activities list with map thumbnails, date badges, "Open" button navigation |
+| 100 | Create Saved Collections screen (saved-collections.tsx) | ✅ | Figma node 1:5414 — Collections/GPX tabs, collection cards with 3-photo collages, privacy badges, collaborator avatars, star/menu actions |
+| 101 | Create Collection Detail Feed screen (collection-detail-feed.tsx) | ✅ | Figma node 1:5507 — "Skitouring Switzerland" header, waterfall feed of activity cards with maps, profiles, elevation graphs, stats |
+| 102 | Create Photo Crop Landscape screen (photo-crop-landscape.tsx) | ✅ | Figma node 1:2303 — Aspect ratio selector (16:9 default), photo preview (383×250px), crop grid overlay, next button |
+| 103 | Create User Profile Atlas screen (user-profile-atlas.tsx) | ✅ | Figma node 1:2330 — Profile info (name, username, stats), friend previews, Settings/Chat/Follow buttons, atlas map, Your Atlas/All tabs, 3-column photo grid |
+| 104 | Register all 10 new routes in app/_layout.tsx | ✅ | Added routes: photo-crop-portrait, messages-list, chat-thread, create-activity, friends-grid, activity-filter-selection, saved-collections, collection-detail-feed, photo-crop-landscape, user-profile-atlas |
+| 105 | Wire all navigation | ✅ | Back buttons, next buttons, list item taps, tab switching, all navigation per Figma design |
+| 106 | Fix TypeScript errors | ✅ | Removed invalid `aspectBtnActive` style reference in photo-crop-portrait |
+| 107 | Update progress.md | ✅ | Phase 9 documented with all 10 new screens and assets |
+
 ---
 
 ## Asset Inventory
@@ -156,6 +194,19 @@
 | profile_photo1.png | Profile image | Profile tab avatar + tab icon |
 | profile_photo2.png | Profile image | Stories + tagged users |
 | profile_photo3.png | Profile image | Stories + tagged users |
+| search_map.png | Map background | Search screen header |
+| explore_map.png | Map background | Explore results header + Create modal bg |
+| explore_header.png | Header background | Explore results header |
+| hero_snow_hiker.png | Hero photo | Image viewer full-screen |
+| gallery_1.png | Gallery photo | Photo gallery grid |
+| gallery_2.png | Gallery photo | Photo gallery grid |
+| gallery_3.png | Gallery photo | Photo gallery grid |
+| gallery_4.png | Gallery photo | Photo gallery grid |
+| gallery_5.png | Gallery photo | Photo gallery grid |
+| gallery_6.png | Gallery photo | Photo gallery grid |
+| gallery_7.png | Gallery photo | Photo gallery grid |
+| gallery_8.png | Gallery photo | Photo gallery grid |
+| activity_types.png | Activity icons | Search screen filters |
 
 ### Icons (assets/icons/) — Now SVG files
 | File | Source (Figma) | Used In |
@@ -217,17 +268,21 @@
 | 2026-03-03 | TypeScript style fix | Removed unsupported `backdropFilter` style key |
 | 2026-03-03 | Web runtime check | Dev server bundled successfully on web |
 | 2026-03-03 | **Figma color audit** | Full audit of all 9 screens + 14 icon components against Figma. Fixed: Strava text white, SearchIcon/FilterIcon defaults, Activity back button color, theme constant added |
+| 2026-03-03 | **Phase 8: New Figma screens** | Added 5 new screens from Figma: Search, Explore Results, Photo Gallery, Image Viewer, Create Modal. Downloaded 13 new image assets. Registered 5 new routes. Wired all navigation across all screens. |
+| 2026-03-03 | **Phase 9: Additional Figma screens** | Added 10 new screens: Photo Crop Portrait/Landscape, Messages List, Chat Thread, Create Activity, Friends Grid, Activity Filter Selection, Saved Collections, Collection Detail Feed, User Profile Atlas. Downloaded 12 image assets. Registered 10 new routes. All 24 screens complete with full navigation wired. Fixed photo-crop-portrait style error. Web server running on localhost:8081. |
+| 2026-03-03 | **Phase 10: Final Figma screens** | Added 9 new screens: Activity Stats, Save to Collection, New Collection Modal, Other User Profile, Feed Filters, New Collection Variant, Photo Fullscreen 1/2, Edit Collection. Downloaded 14 new image assets. Registered 9 new routes. Fixed 54 non-interactive buttons/elements across ALL 24 existing screens (missing onPress handlers, Views that should be TouchableOpacity). Updated navigation hub to 29 screens. |
 
 ---
 
 ## Current Status
-- **Auth + post-auth flow implemented** — 4 auth screens plus 4 tab screens and 1 activity detail screen
-- **Clickable prototype active** — Primary buttons and feed card interactions are wired end-to-end
-- **Tab navigation complete** — Home, Explore, Activity, and Profile tabs are connected and functional
-- **All assets local** — Landing assets + feed/map/profile images served from local files
+- **33 screens implemented** — 4 auth, 4 tabs, 1 activity detail, 5 Phase 8, 10 Phase 9, 9 Phase 10
+- **ALL buttons interactive** — Full interactivity audit completed: 54 non-interactive elements fixed across all screens
+- **Tab navigation complete** — Home, Explore (plus → create modal), Activity, and Profile tabs
+- **Navigation hub** — 29 screens organized by phase, accessible at /navigation-hub
+- **All assets local** — 55+ images in assets/images/feed/, all served from local files
 - **SVG icon system expanded** — 5 core brand/avatar icons + 9 UI/action icons
 - **Figma color-audited** — All icon components and screen elements verified against Figma designs
-- **Web tested** — Expo web bundles and runs successfully
+- **Web tested and running** — Expo web server at localhost:8083, all 33 screens accessible
 
 ## Figma Reference
 - **File Key:** `FAJlYtbyrtrEum7CScjrwK`
@@ -235,6 +290,35 @@
 - **Sign In:** Node `1:4370`
 - **Verify Email:** Node `1:4393`
 - **Profile Setup:** Node `1:4415`
+- **Home Feed:** Node `1:3768`
+- **Explore:** Node `1:3932`
+- **Activity:** Node `1:2761`
+- **Profile:** Node `1:4825`
+- **Activity Detail:** Nodes `1:2062` / `1:2152`
+- **Search:** Node `1:4437`
+- **Explore Results:** Node `1:4825`
+- **Photo Gallery:** Node `1:2249`
+- **Image Viewer:** Node `1:3139`
+- **Create Modal:** Node `1:3402`
+- **Photo Crop Portrait:** Node `1:2276`
+- **Messages List:** Node `1:5230`
+- **Chat Thread:** Node `1:5889`
+- **Create Activity:** Node `1:2704`
+- **Friends Grid:** Node `1:5275`
+- **Activity Filter Selection:** Node `1:5334`
+- **Saved Collections:** Node `1:5414`
+- **Collection Detail Feed:** Node `1:5507`
+- **Photo Crop Landscape:** Node `1:2303`
+- **User Profile Atlas:** Node `1:2330`
+- **Activity Stats:** Node `1:2421`
+- **Save to Collection:** Node `1:3034`
+- **New Collection Modal:** Node `1:3685`
+- **Other User Profile:** Node `1:2626`
+- **Feed Filters:** Node `1:4497`
+- **New Collection Variant:** Node `1:3081`
+- **Photo Fullscreen 1:** Node `1:2242`
+- **Photo Fullscreen 2:** Node `1:2245`
+- **Edit Collection:** Node `1:5944`
 
 ## Known Issues
 | Issue | Status | Notes |
@@ -243,4 +327,5 @@
 | Strava text black on landing | ✅ Fixed | Changed to white (#FFFFFF) per Figma |
 | SearchIcon/FilterIcon wrong default | ✅ Fixed | Was #1F1F1F, corrected to #282828 |
 | Activity back button brownish | ✅ Fixed | Was #211906, corrected to #282828 |
+| photo-crop-portrait invalid style | ✅ Fixed | Removed invalid `aspectBtnActive` style reference |
 | No actual backend / auth logic | ⬜ | Frontend-only for now (by design) |
